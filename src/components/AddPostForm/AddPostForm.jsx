@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { nanoid } from "@reduxjs/toolkit";
+
 import { PostAdd } from "../Redux/slice";
 import { redirect } from "react-router-dom";
 

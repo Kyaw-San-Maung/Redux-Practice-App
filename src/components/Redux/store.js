@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import postReducer from "./slice";
+import userReducer from "../userSlice/userSlice";
 // import storage from "redux-persist/lib/storage";
 // import { persistReducer } from "redux-persist";
 
@@ -14,5 +15,6 @@ import postReducer from "./slice";
 export const store = configureStore({
   reducer: {
     posts: postReducer,
+    users: userReducer,
   },
 });
