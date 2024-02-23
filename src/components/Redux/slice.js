@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, nanoid } from "@reduxjs/toolkit";
 
 const initialState = [
   {
@@ -17,8 +17,19 @@ export const CounterSlice = createSlice({
   name: "post",
   initialState,
   reducers: {
-    PostAdd: (state, action) => {
-      state.push(action.payload);
+    PostAdd: {
+      reducer(state, action) {
+        state.push(action.payload);
+      },
+      prepare(title, content) {
+        return {
+          payload: {
+            id: nanoid(),
+            title,
+            content,
+          },
+        };
+      },
     },
   },
 });

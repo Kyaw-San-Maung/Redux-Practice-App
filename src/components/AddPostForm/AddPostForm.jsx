@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit";
 import { PostAdd } from "../Redux/slice";
+import { redirect } from "react-router-dom";
 
 export const AddPostForm = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-
   const dispatch = useDispatch();
 
   const onTitleChanged = (e) => setTitle(e.target.value);
@@ -14,10 +14,11 @@ export const AddPostForm = () => {
 
   const onSavePostClicked = () => {
     if (title && content) {
-      dispatch(PostAdd({ id: nanoid(), title, content }));
+      dispatch(PostAdd(title, content));
       console.log("called dispatch");
       setTitle("");
       setContent("");
+      redirect("/");
     }
   };
 

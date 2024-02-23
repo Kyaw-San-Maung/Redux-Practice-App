@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { selectAllPosts } from "../Redux/slice";
+import { AddPostForm } from "../AddPostForm/AddPostForm";
 
 export const Home = () => {
   const posts = useSelector(selectAllPosts);
@@ -21,6 +22,7 @@ export const Home = () => {
 
   return (
     <>
+      <AddPostForm />
       <section style={{ padding: "1rem" }}>
         <h2 style={{ fontSize: "3.5rem", fontWeight: "800" }}>
           <a href="/form" style={{ textDecoration: "none", color: "black" }}>
