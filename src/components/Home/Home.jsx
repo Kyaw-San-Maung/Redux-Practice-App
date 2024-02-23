@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { selectAllPosts } from "../Redux/slice";
 import { AddPostForm } from "../AddPostForm/AddPostForm";
+import { PostAuthor } from "../PostAuthor/PostAuthor";
 
 export const Home = () => {
   const posts = useSelector(selectAllPosts);
@@ -17,6 +18,10 @@ export const Home = () => {
     >
       <h3 style={{ fontWeight: "850", fontSize: "1.5rem" }}>{post.title}</h3>
       <p>{post.content.substring(0, 100)}</p>
+
+      <p className="postCredit">
+        <PostAuthor userId={post.userId} />
+      </p>
     </article>
   ));
 

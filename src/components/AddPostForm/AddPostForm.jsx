@@ -1,26 +1,35 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
 import { PostAdd } from "../Redux/slice";
-import { redirect } from "react-router-dom";
+import { selectAllUsers } from "../userSlice/userSlice";
 
 export const AddPostForm = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [userId, setUserId] = useState("");
   const dispatch = useDispatch();
 
+  const users = useSelector(selectAllUsers);
   const onTitleChanged = (e) => setTitle(e.target.value);
   const onContentChanged = (e) => setContent(e.target.value);
+  const onAuthorChanged = (e) => setUserId(e.target.value);
 
   const onSavePostClicked = () => {
     if (title && content) {
-      dispatch(PostAdd(title, content));
+      dispatch(PostAdd(title, content, userId));
       console.log("called dispatch");
       setTitle("");
       setContent("");
-      redirect("/");
     }
   };
+
+  const canSave = Boolean(title) && Boolean(content) && Boolean(userId);
+
+  const userOptions = users.map((user) => (
+    <option key={user.id} value={user.id}>
+      {user.name}
+    </option>
+  ));
 
   return (
     <section style={{ padding: "1.5rem" }}>
@@ -53,6 +62,20 @@ export const AddPostForm = () => {
             />
             <br />
           </div>
+          <div style={{ margin: "1% 40%" }}>
+            <label
+              htmlFor="postAuthor"
+              style={{ fontSize: "1.3rem", fontWeight: "600" }}
+            >
+              Author
+            </label>
+            <br />
+            <select id="postAuthor" value={userId} onChange={onAuthorChanged}>
+              <option value=""></option>
+              {userOptions}
+            </select>
+            <br />
+          </div>
           <div style={{ margin: "0.5% 40%" }}>
             <label
               htmlFor="postContent"
@@ -77,6 +100,7 @@ export const AddPostForm = () => {
               type="button"
               onClick={onSavePostClicked}
               style={{ padding: "0.4rem 0.8rem", width: "100%" }}
+              disabled={!canSave}
             >
               Save Post
             </button>
